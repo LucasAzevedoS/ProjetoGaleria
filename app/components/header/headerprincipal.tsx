@@ -17,6 +17,7 @@ import {
     ScrollArea,
     rem,
     useMantineTheme,
+    Avatar,
   } from '@mantine/core';
 
   import { useDisclosure } from '@mantine/hooks';
@@ -30,6 +31,7 @@ import {
     IconChevronDown,
   } from '@tabler/icons-react';
   import classes from './header.module.css';
+import ToggleMode from '../toggleMode';
   
   const mockdata = [
     {
@@ -102,7 +104,7 @@ import {
                   <a href="#" className={classes.link}>
                     <Center inline>
                       <Box component="span" mr={5}>
-                        Features
+                        Administracao
                       </Box>
                       <IconChevronDown
                         style={{ width: rem(16), height: rem(16) }}
@@ -142,19 +144,22 @@ import {
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
-                Learn
+                Registrar
               </a>
               <a href="#" className={classes.link}>
-                Academy
+                Usuarios
               </a>
+              
             </Group>
-  
+            <Group>
+            <ToggleMode/>
+            </Group>
             <Group visibleFrom="sm">
-              <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Avatar/>
             </Group>
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
+            
           </Group>
         </header>
   
@@ -200,6 +205,7 @@ import {
             </Group>
           </ScrollArea>
         </Drawer>
+        
       </Box>
     );
   }

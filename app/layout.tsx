@@ -2,7 +2,6 @@ import '@mantine/core/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import HeaderPrin from './components/header/headerprincipal';
-
 export const metadata = {
   title: 'My Mantine app',
   description: 'I have followed setup instructions carefully',
