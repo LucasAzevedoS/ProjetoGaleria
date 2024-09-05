@@ -7,6 +7,8 @@ export default function Planos() {
   return (
     <Center>
       <SimpleGrid
+        display="flex"
+        justifyContent="center"
         cols={{ base: 1, sm: 2, lg: 2 }}
         spacing={{ base: 10, sm: "xl" }}
         verticalSpacing={{ base: "md", sm: "xl" }}
@@ -14,7 +16,9 @@ export default function Planos() {
       >
         <Card shadow="sm" padding="lg" radius="md" withBorder>
 
-          <Card.Section>
+          <Card.Section 
+          
+          >
             <Image
               src="https://static.vecteezy.com/ti/vetor-gratis/p1/2823135-champion-bronze-medal-with-red-ribbon-icon-sign-of-third-place-isolated-on-white-background-vector-illustration-gratis-vetor.jpg"
               height={500}
