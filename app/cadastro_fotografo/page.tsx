@@ -1,16 +1,18 @@
 "use client";
 
-import { Center } from "@mantine/core";
-import CadFotografo from "../components/cadastroFotografo";
+import { Center, Paper } from "@mantine/core";
+import CadFotografo from "./cadastroFotografo";
 
 export default function CadastroFotografo() {
   return (
     <>
       <Center>
-        <h1>Cadastro Fotografo</h1>
-      </Center>
-      <Center>
-        <CadFotografo />
+        <Paper shadow="xl" radius="md" withBorder p="xl" m="auto">
+          <Center mb="lg">
+            <h1>Cadastro Fotografo</h1>
+          </Center>
+          <CadFotografo />
+        </Paper>
       </Center>
     </>
   );

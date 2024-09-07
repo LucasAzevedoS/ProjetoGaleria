@@ -15,7 +15,11 @@ export default function CadFotografo() {
     mode: "uncontrolled",
     initialValues: {
       nome: "",
+      nomefantasia: "",
+      documento: "",
       email: "",
+      site: "",
+      plano: "",
       termsOfService: false,
     },
 
@@ -41,15 +45,15 @@ export default function CadFotografo() {
         <TextInput
           withAsterisk
           label="Nome Fantasia"
-          key={form.key("nome")}
-          {...form.getInputProps("nome")}
+          key={form.key("nomefantasia")}
+          {...form.getInputProps("nomefantasia")}
         />
         <TextInput
           withAsterisk
           label="CPF ou CNPJ"
           placeholder="000.000.000-00"
-          key={form.key("email")}
-          {...form.getInputProps("email")}
+          key={form.key("documento")}
+          {...form.getInputProps("documento")}
         />
         <TextInput
           withAsterisk
@@ -62,15 +66,19 @@ export default function CadFotografo() {
           withAsterisk
           label="Site"
           placeholder="Seu site"
-          key={form.key("email")}
-          {...form.getInputProps("email")}
+          key={form.key("site")}
+          {...form.getInputProps("site")}
         />
 
-        <Select
-          label="Plano"
-          placeholder="Escolha um plano"
-          data={["Bronze", "Prata", "Ouro", "Diamante"]}
-        />
+        <Flex direction={"column"}>
+          <Select
+            label="Plano"
+            placeholder="Escolha um plano"
+            data={["Bronze", "Prata", "Ouro", "Diamante"]}
+            key={form.key("plano")}
+            {...form.getInputProps("plano")}
+          />
+        </Flex>
 
         <Checkbox
           mt="md"
@@ -79,9 +87,10 @@ export default function CadFotografo() {
           {...form.getInputProps("termsOfService", { type: "checkbox" })}
         />
       </SimpleGrid>
-
       <Group justify="flex-end" mt="md">
-        <Button type="submit">Cadastar</Button>
+        <Button fullWidth type="submit">
+          Cadastar
+        </Button>
       </Group>
     </form>
   );
