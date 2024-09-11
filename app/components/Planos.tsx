@@ -8,7 +8,7 @@ export default function Planos() {
     <Center>
       <SimpleGrid
         display="flex"
-        justifyContent="center"
+          
         cols={{ base: 1, sm: 2, lg: 2 }}
         spacing={{ base: 10, sm: "xl" }}
         verticalSpacing={{ base: "md", sm: "xl" }}

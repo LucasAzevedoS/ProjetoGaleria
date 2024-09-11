@@ -21,6 +21,10 @@ import {
   Flex,
 } from "@mantine/core";
 
+
+
+
+
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconNotification,
@@ -121,7 +125,7 @@ export default function HeaderPrin() {
                 <a href="#" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Administracao
+                      Painel Fotografo
                     </Box>
                     <IconChevronDown
                       style={{ width: rem(16), height: rem(16) }}
@@ -149,22 +153,31 @@ export default function HeaderPrin() {
                   <Group justify="space-between">
                     <div>
                       <Text fw={500} fz="sm">
-                        Get started
+                        Adquira um Plano
                       </Text>
                       <Text size="xs" c="dimmed">
-                        Their food sources have decreased, and their numbers
+                        Ainda nao possui um plano? Clique aqui e Adquira o seu
                       </Text>
                     </div>
-                    <Button variant="default">Get started</Button>
+
+
+
+                    <Button
+                    color="gray">
+                    <Anchor href="./Planos" target="_blank" underline="none">
+                      Adquira Aqui
+                    </Anchor>
+
+                    </Button>
                   </Group>
                 </div>
               </HoverCard.Dropdown>
             </HoverCard>
             <a href="#" className={classes.link}>
-              Registrar
+              Registrar Galeria
             </a>
-            <a href="#" className={classes.link}>
-              Usuarios
+            <a href="./cadastro_cliente" className={classes.link}>
+              Registrar Cliente
             </a>
           </Group>
           <Group>
@@ -201,7 +214,7 @@ export default function HeaderPrin() {
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
               <Box component="span" mr={5}>
-                Features
+                Painel Fotografo
               </Box>
               <IconChevronDown
                 style={{ width: rem(16), height: rem(16) }}
@@ -211,10 +224,10 @@ export default function HeaderPrin() {
           </UnstyledButton>
           <Collapse in={linksOpened}>{links}</Collapse>
           <a href="#" className={classes.link}>
-            Learn
+            Registrar Galeria
           </a>
           <a href="#" className={classes.link}>
-            Academy
+            Registrar Cliente
           </a>
 
           <Divider my="sm" />
