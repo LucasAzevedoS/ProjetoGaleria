@@ -1,10 +1,10 @@
-import '@mantine/core/styles.css';
-
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import HeaderPrin from './components/header/headerprincipal';
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import ClientProviders from "./client-providers";
+import HeaderPrin from "./components/header/headerprincipal";
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: "My Mantine app",
+  description: "I have followed setup instructions carefully",
 };
 
 export default function RootLayout({
@@ -18,7 +18,12 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider><HeaderPrin/>{children}</MantineProvider>
+        <ClientProviders>
+          <MantineProvider>
+            <HeaderPrin />
+            {children}
+          </MantineProvider>
+        </ClientProviders>
       </body>
     </html>
   );
