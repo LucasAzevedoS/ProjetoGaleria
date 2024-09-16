@@ -18,12 +18,10 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <ClientProviders>
-          <MantineProvider>
-            <HeaderPrin />
-            {children}
-          </MantineProvider>
-        </ClientProviders>
+        <MantineProvider>
+          <HeaderPrin />
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );
