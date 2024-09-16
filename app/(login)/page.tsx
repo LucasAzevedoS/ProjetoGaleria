@@ -1,7 +1,6 @@
 "use server";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import AuthenticationForm, { Sair } from "../components/formLogin/formlogin";
-import { Button } from "@mantine/core";
 
 export default async function LoginPage() {
   const session = await auth();
