@@ -1,7 +1,6 @@
 import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import ClientProviders from "./client-providers";
-import HeaderPrin from "./components/header/headerprincipal";
+import HeaderPage from "./components/header/header";
 export const metadata = {
   title: "My Mantine app",
   description: "I have followed setup instructions carefully",
@@ -19,7 +18,7 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider>
-          <HeaderPrin />
+          <HeaderPage />
           {children}
         </MantineProvider>
       </body>

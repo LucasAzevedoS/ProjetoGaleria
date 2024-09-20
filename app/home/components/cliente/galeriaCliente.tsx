@@ -13,14 +13,13 @@ import {
   Title,
   ThemeIcon,
   Center,
-  CardSection,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconAppsFilled } from "@tabler/icons-react";
 
 import { useDisclosure } from "@mantine/hooks";
 
-export default function CadGaleria() {
+export default function GaleriaCliente() {
   const [opened, { open, close }] = useDisclosure(false);
   const form = useForm({
     mode: "uncontrolled",
@@ -117,7 +116,7 @@ export default function CadGaleria() {
 
           <Center>
             <Title c="white" size="25" fw={500}>
-              Cadastro Fotografo
+              Cadastro Galeria
             </Title>
           </Center>
         </Card>
