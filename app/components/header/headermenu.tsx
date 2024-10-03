@@ -15,11 +15,13 @@ import {
   Drawer,
   Collapse,
   ScrollArea,
+  Image,
   rem,
   useMantineTheme,
+  useMantineColorScheme,
 } from "@mantine/core";
 
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import {
   IconNotification,
   IconCode,
@@ -68,6 +70,8 @@ const mockdata = [
 ];
 
 export default function HeaderPrin() {
+  const { colorScheme } = useMantineColorScheme();
+  const isMobile = useMediaQuery("(max-width: 50em)");
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -97,13 +101,29 @@ export default function HeaderPrin() {
 
   return (
     <>
-      {session ? (
-        <>
-          <header>
-            <Group>
-              <h1>logo</h1>
-
-              <Group h="100%" gap={0} visibleFrom="sm">
+      <header>
+        <Group>
+          {isMobile ? (
+            <Image
+              src={
+                colorScheme === "dark"
+                  ? "logo_cam_dark.png"
+                  : "logo_cam_light.png"
+              }
+              h="40"
+              w="150"
+            />
+          ) : (
+            <Image
+              src={
+                colorScheme === "dark"
+                  ? "logo_cam_dark.png"
+                  : "logo_cam_light.png"
+              }
+              w="250"
+            />
+          )}
+          {/* <Group h="100%" gap={0} visibleFrom="sm">
                 <a href="#" className={classes.link}>
                   Home
                 </a>
@@ -180,11 +200,11 @@ export default function HeaderPrin() {
                 <Group>
                   <ToggleMode />
                 </Group>
-              </Group>
-            </Group>
-          </header>
+              </Group>*/}
+        </Group>
+      </header>
 
-          <Drawer
+      {/* <Drawer
             opened={drawerOpened}
             onClose={closeDrawer}
             size="100%"
@@ -225,11 +245,7 @@ export default function HeaderPrin() {
                 <Button>Sign up</Button>
               </Group>
             </ScrollArea>
-          </Drawer>
-        </>
-      ) : (
-        <></>
-      )}
+          </Drawer> */}
     </>
   );
 }

@@ -107,7 +107,7 @@ export default function GaleriaCliente() {
         </form>
       </Modal>
       <UnstyledButton onClick={open}>
-        <Card bg="#5f2aa0" shadow="sm" padding="lg" radius="md" withBorder>
+        <Card bg="#5f2aa0" shadow="sm" padding="lg" radius="xl" withBorder>
           <Center m="10">
             <ThemeIcon color="5f2aa0" size="xl">
               <IconAppsFilled size={80} />
@@ -116,7 +116,7 @@ export default function GaleriaCliente() {
 
           <Center>
             <Title c="white" size="25" fw={500}>
-              Cadastro Galeria
+              Visualizar Galeria
             </Title>
           </Center>
         </Card>

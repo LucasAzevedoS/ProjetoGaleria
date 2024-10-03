@@ -10,25 +10,34 @@ import Credentials from "next-auth/providers/credentials";
 declare module "@auth/core/types" {
   interface Session {
     user: {
-      cod: string;
+      id_usuario: number;
       name: string;
-      perfil: string;
+      usuario: string;
+      nm_grupo: string;
+      id_grupo: number;
+      // qtfoto: number;
     } & DefaultSession["user"];
   }
 
   interface User {
-    cod: string;
-    perfil: string;
+    id_usuario: number;
+    id_grupo: number;
+    nm_grupo: string;
+    usuario: string;
+    // qtfoto: number;
   }
 }
 
 declare module "@auth/core/jwt" {
   interface JWT {
     identifier: string;
-    cod: string;
+    id_usuario: number;
     email: string;
     name: string;
-    perfil: string;
+    usuario: string;
+    nm_grupo: string;
+    id_grupo: number;
+    // qtfoto: number;
   }
 }
 
@@ -57,49 +66,91 @@ export const authConfig = {
     async jwt({ token, user }) {
       /* Step 1: update the token based on the user object */
       if (user) {
-        token.perfil = user.perfil;
-        token.cod = user.cod;
+        token.nm_grupo = user.nm_grupo;
+        token.id_usuario = user.id_usuario;
+        token.usuario = user.usuario;
+        token.id_grupo = user.id_grupo;
+        // token.qtfoto = user.qtfoto;
       }
       return token;
     },
     session({ session, token }) {
       /* Step 2: update the session.user based on the token object */
       if (token && session.user) {
-        session.user.perfil = token.perfil;
+        session.user.nm_grupo = token.nm_grupo;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.cod = token.cod;
+        session.user.id_usuario = token.id_usuario;
+        session.user.usuario = token.usuario;
+        session.user.id_grupo = token.id_grupo;
+
+        // session.user.qtfoto = token.qtfoto;
       }
       return session;
     },
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
-
+const axios = require("axios");
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       credentials: {
-        username: { label: "Username" },
+        username: { label: "Username", type: "string" },
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const user = {
-          cod: "1",
-          name: "J Smith",
-          email: "jsmith@example.com",
-          perfil: "fotografo",
-        };
+        // --- começo do login via axios ---
+        // try {
+        //   const res = await axios.post(
+        //     "https://localhost:7124/api/User/usuario-in",
+        //     {
+        //       username: credentials.username,
+        //       password: credentials.password,
+        //     },
+        //     {
+        //       httpsAgent: new (require("https").Agent)({
+        //         rejectUnauthorized: false,
+        //       }),
+        //     }
+        //   );
+        //   console.log(res);
+
+        //   const user = res.data;
+
+        //   if (res.status === 200 && user) {
+        //     return user; // Login bem-sucedido
+        //   }
+        //   throw new Error("Credenciais inválidas");
+        // } catch (error) {
+        //   console.error("Erro ao autenticar:", error);
+        //   throw new Error("Erro na autenticação");
+        // }
+
+        // --- fim da autenticação via axios ----
+
+        // --- Inicio da autenticação via fetch ----
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        const res = await fetch("https://localhost:7124/api/User/usuario-in", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: credentials.username,
+            password: credentials.password,
+          }),
+        });
+        console.log(res);
+        const user = await res.json();
+        console.log(user);
 
         if (!user) {
-          // No user found, so this is their first attempt to login
-          // meaning this is also the place you could do registration
           throw new Error("User not found.");
         }
-
-        // return user object with their profile data
         return user;
+        // --- fim da autenticação via axios ----
       },
     }),
   ],
@@ -118,5 +169,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       console.debug(code, message);
     },
   },
-  secret: "PIK4Cipg/L0Ul/WHHqLhXl9IreNzckcIzRVNQ4r2GyI=",
+  secret: "ypCeNemhoOahJOq95VUaHDXdl+TZhDSnoWmh+fMuqd0=",
 });

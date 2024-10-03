@@ -15,6 +15,7 @@ import classes from "./header.module.css";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import ToggleMode from "../toggleMode";
 
 const stats = [
   { value: "34K", label: "Followers" },
@@ -23,6 +24,8 @@ const stats = [
 ];
 export default function AvatarLogin() {
   const { data: session } = useSession();
+  const user = session?.user.name;
+  const email = session?.user.email;
   return (
     <>
       {session ? (
@@ -46,18 +49,13 @@ export default function AvatarLogin() {
 
                   <div style={{ flex: 1 }}>
                     <Text size="sm" fw={500}>
-                      {session ? session.user.name : "Harriette Spoonlicker"}
+                      {user}
                     </Text>
-
+                    {/* 
                     <Text c="dimmed" size="xs">
-                      hspoonlicker@outlook.com
-                    </Text>
+                      {email}
+                    </Text> */}
                   </div>
-
-                  <IconChevronRight
-                    style={{ width: rem(14), height: rem(14) }}
-                    stroke={1.5}
-                  />
                 </Group>
               </UnstyledButton>
             </Popover.Target>
@@ -65,6 +63,7 @@ export default function AvatarLogin() {
               <AvartarContent />
             </Popover.Dropdown>
           </Popover>
+          <ToggleMode />
         </Group>
       ) : (
         <></>

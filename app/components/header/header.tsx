@@ -15,6 +15,7 @@ export default function HeaderPage() {
               display="flex"
               justify="space-between"
               m="auto"
+              pt="md"
               h="90%"
               maw="1024"
             >

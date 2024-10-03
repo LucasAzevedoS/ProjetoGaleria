@@ -1,5 +1,5 @@
 "use server";
-import AuthenticationForm from "../components/formLogin/formlogin";
+import AuthenticationForm from "./components/formlogin";
 
 export default async function LoginPage() {
   return (

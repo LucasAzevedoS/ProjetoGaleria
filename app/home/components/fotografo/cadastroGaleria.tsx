@@ -16,7 +16,7 @@ import {
   CardSection,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconAppsFilled } from "@tabler/icons-react";
+import { IconAppsFilled, IconPhotoScan } from "@tabler/icons-react";
 
 import { useDisclosure } from "@mantine/hooks";
 
@@ -108,18 +108,12 @@ export default function CadGaleria() {
         </form>
       </Modal>
       <UnstyledButton onClick={open}>
-        <Card bg="#5f2aa0" shadow="sm" padding="lg" radius="md" withBorder>
-          <Center m="10">
-            <ThemeIcon color="5f2aa0" size="xl">
-              <IconAppsFilled size={80} />
-            </ThemeIcon>
-          </Center>
+        <Card shadow="sm" padding="lg" radius="xl" withBorder maw={200}>
+          <IconPhotoScan size={40} />
 
-          <Center>
-            <Title c="white" size="25" fw={500}>
-              Cadastro Galeria
-            </Title>
-          </Center>
+          <Title size="25" fw={500} mt="40">
+            Galerias
+          </Title>
         </Card>
       </UnstyledButton>
     </>

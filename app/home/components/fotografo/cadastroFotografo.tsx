@@ -107,18 +107,12 @@ export default function CadFotografo() {
         </form>
       </Modal>
       <UnstyledButton onClick={open}>
-        <Card bg="#5f2aa0" shadow="sm" padding="lg" radius="md" withBorder>
-          <Center m="10">
-            <ThemeIcon color="5f2aa0" size="xl">
-              <IconCameraPlus size={80} />
-            </ThemeIcon>
-          </Center>
+        <Card shadow="sm" padding="lg" radius="xl" withBorder maw={200}>
+          <IconCameraPlus size={40} />
 
-          <Center>
-            <Title c="white" size="25" fw={500}>
-              Cadastro Fotografo
-            </Title>
-          </Center>
+          <Title size="25" fw={500} mt="40">
+            Fotógrafos
+          </Title>
         </Card>
       </UnstyledButton>
     </>

@@ -14,11 +14,66 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconMoodPlus } from "@tabler/icons-react";
+import ListaClientes from "./listaClientes";
 
 export default function CadClient() {
   const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery("(max-width: 50em)");
+  const form = useForm({
+    mode: "uncontrolled",
+    initialValues: {
+      nome: "",
+    },
+  });
+  return (
+    <>
+      <Modal
+        opened={opened}
+        size="50%"
+        onClose={close}
+        title="Cadastro de Cliente"
+        fullScreen={isMobile}
+        transitionProps={{ transition: "fade", duration: 200 }}
+      >
+        {/* Modal content */}
+
+        <CadClientForm />
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+          <TextInput
+            withAsterisk
+            label="Pesuisa cliente"
+            key={form.key("nome")}
+            {...form.getInputProps("nome")}
+          />
+
+          <ListaClientes />
+          {isMobile && (
+            <Button mt="20" variant="outline" onClick={close} fullWidth>
+              Voltar
+            </Button>
+          )}
+        </form>
+      </Modal>
+      <UnstyledButton onClick={open}>
+        <Card shadow="sm" padding="lg" radius="xl" withBorder maw={200}>
+          <IconMoodPlus size={40} />
+
+          <Title size="25" fw={500} mt="40">
+            Clientes
+          </Title>
+        </Card>
+      </UnstyledButton>
+    </>
+  );
+}
+
+export function CadClientForm() {
+  const icon = <IconMoodPlus size={25} />;
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const isMobile = useMediaQuery("(max-width: 50em)");
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -35,7 +90,12 @@ export default function CadClient() {
   });
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Authentication">
+      <Modal
+        opened={opened}
+        fullScreen={isMobile}
+        onClose={close}
+        title="Inserir CLiente"
+      >
         {/* Modal content */}
 
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
@@ -89,36 +149,37 @@ export default function CadClient() {
               key={form.key("password")}
               {...form.getInputProps("password")}
             />
-
-            <Checkbox
-              mt="md"
-              label="Declaro de li e concordo com as politicas do site."
-              key={form.key("termsOfService")}
-              {...form.getInputProps("termsOfService", { type: "checkbox" })}
-            />
           </SimpleGrid>
+
+          <Checkbox
+            mt="md"
+            label="Cliente Ativo."
+            key={form.key("termsOfService")}
+            {...form.getInputProps("termsOfService", { type: "checkbox" })}
+          />
           <Group justify="flex-end" mt="md">
             <Button fullWidth type="submit">
               Cadastar
             </Button>
           </Group>
         </form>
+        {isMobile && (
+          <Button mt="20" variant="outline" onClick={close} fullWidth>
+            Voltar
+          </Button>
+        )}
       </Modal>
-      <UnstyledButton onClick={open}>
-        <Card bg="#5f2aa0" shadow="sm" padding="lg" radius="md" withBorder>
-          <Center m="10">
-            <ThemeIcon color="5f2aa0" size="xl">
-              <IconMoodPlus size={80} />
-            </ThemeIcon>
-          </Center>
-
-          <Center>
-            <Title c="white" size="25" fw={500}>
-              Cadastro Cliente
-            </Title>
-          </Center>
-        </Card>
-      </UnstyledButton>
+      <Button
+        mb="md"
+        color="lime.9"
+        variant="light"
+        justify="center"
+        onClick={open}
+        fullWidth
+        leftSection={icon}
+      >
+        Novo Cliente
+      </Button>
     </>
   );
 }
