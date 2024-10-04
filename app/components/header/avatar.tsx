@@ -25,7 +25,6 @@ const stats = [
 export default function AvatarLogin() {
   const { data: session } = useSession();
   const user = session?.user.name;
-  const email = session?.user.email;
   return (
     <>
       {session ? (
@@ -51,10 +50,6 @@ export default function AvatarLogin() {
                     <Text size="sm" fw={500}>
                       {user}
                     </Text>
-                    {/* 
-                    <Text c="dimmed" size="xs">
-                      {email}
-                    </Text> */}
                   </div>
                 </Group>
               </UnstyledButton>
@@ -73,6 +68,9 @@ export default function AvatarLogin() {
 }
 
 export function AvartarContent() {
+  const { data: session } = useSession();
+  const user = session?.user.name;
+  const email = session?.user.email;
   const items = stats.map((stat) => (
     <div key={stat.label}>
       <Text ta="center" fz="lg" fw={500}>
@@ -101,7 +99,10 @@ export function AvartarContent() {
         className={classes.avatar}
       />
       <Text ta="center" fz="lg" fw={500} mt="sm">
-        Bill Headbanger
+        {user}
+      </Text>
+      <Text ta="center" c="dimmed" size="xs">
+        {email}
       </Text>
       {/* <Text ta="center" fz="sm" c="dimmed">
                     Fullstack engineer

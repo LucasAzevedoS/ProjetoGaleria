@@ -106,9 +106,9 @@ export default function HeaderPrin() {
           {isMobile ? (
             <Image
               src={
-                colorScheme === "dark"
-                  ? "logo_cam_dark.png"
-                  : "logo_cam_light.png"
+                colorScheme != "dark"
+                  ? "logo_cam_light.png"
+                  : "logo_cam_dark.png"
               }
               h="40"
               w="150"
@@ -116,9 +116,9 @@ export default function HeaderPrin() {
           ) : (
             <Image
               src={
-                colorScheme === "dark"
-                  ? "logo_cam_dark.png"
-                  : "logo_cam_light.png"
+                colorScheme != "dark"
+                  ? "logo_cam_light.png"
+                  : "logo_cam_dark.png"
               }
               w="250"
             />

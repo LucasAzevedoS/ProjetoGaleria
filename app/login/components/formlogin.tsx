@@ -15,23 +15,28 @@ import {
 } from "@mantine/core";
 import { GoogleButton } from "./GoogleButton";
 import { signIn, signOut } from "next-auth/react";
+import { NumericFormat } from "react-number-format";
 
 export function Sair() {
   return <Button onClick={() => signOut()}>Logoff</Button>;
 }
 
 export default function AuthenticationForm(props: any) {
-  const [type, toggle] = useToggle(["login", "register"]);
+  const [type, toggle] = useToggle(["login", "cadastro"]);
   const form = useForm({
     initialValues: {
       username: "",
       name: "",
+      cpf: "",
+      fone: "",
+      empresa: "",
       password: "",
       terms: true,
+      fotografo: true,
     },
 
     validate: {
-      username: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
+      username: (val) => (/^\S+@\S+$/.test(val) ? null : "Email inválido"),
       // password: (val) =>
       //   val.length <= 6
       //     ? "Password should include at least 6 characters"
@@ -61,14 +66,18 @@ export default function AuthenticationForm(props: any) {
     <Paper m="auto" maw="1024" radius="md" p="xl" withBorder {...props}>
       <Text size="lg" fw={500}></Text>
       <Text size="lg" fw={500}>
-        Welcome to Mantine, {type} with
+        Bem vindo, faça o {type} com
       </Text>
 
       <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
       </Group>
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+      <Divider
+        label="Ou com seu e-mail e senha"
+        labelPosition="center"
+        my="lg"
+      />
 
       <form
         onSubmit={form.onSubmit((values) => {
@@ -76,22 +85,51 @@ export default function AuthenticationForm(props: any) {
         })}
       >
         <Stack>
-          {type === "register" && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
-              }
-              radius="md"
-            />
+          {type === "cadastro" && (
+            <>
+              <TextInput
+                label="Nome"
+                placeholder="Seu nome"
+                value={form.values.name}
+                onChange={(event) =>
+                  form.setFieldValue("name", event.currentTarget.value)
+                }
+                radius="md"
+              />
+              <TextInput
+                label="CPF"
+                placeholder="Seu nome"
+                value={form.values.cpf}
+                onChange={(event) =>
+                  form.setFieldValue("cpf", event.currentTarget.value)
+                }
+                radius="md"
+              />
+              <TextInput
+                label="Telefone"
+                placeholder="Seu nome"
+                value={form.values.fone}
+                onChange={(event) =>
+                  form.setFieldValue("fone", event.currentTarget.value)
+                }
+                radius="md"
+              />
+              <TextInput
+                label="Empresa"
+                placeholder="Seu nome"
+                value={form.values.empresa}
+                onChange={(event) =>
+                  form.setFieldValue("empresa", event.currentTarget.value)
+                }
+                radius="md"
+              />
+            </>
           )}
 
           <TextInput
             required
-            label="username"
-            placeholder="hello@mantine.dev"
+            label="Email"
+            placeholder="seunome@email.com"
             value={form.values.username}
             onChange={(event) =>
               form.setFieldValue("username", event.currentTarget.value)
@@ -102,22 +140,30 @@ export default function AuthenticationForm(props: any) {
 
           <PasswordInput
             required
-            label="Password"
-            placeholder="Your password"
+            label="Senha"
+            placeholder="Sua senha"
             value={form.values.password}
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
             error={
               form.errors.password &&
-              "Password should include at least 6 characters"
+              "A senha deverá ter pelo menos 6 caracteres!"
             }
             radius="md"
           />
 
-          {type === "register" && (
+          <Checkbox
+            label="Sou Fotografo"
+            checked={form.values.fotografo}
+            onChange={(event) =>
+              form.setFieldValue("fotografo", event.currentTarget.checked)
+            }
+          />
+
+          {type === "cadastro" && (
             <Checkbox
-              label="I accept terms and conditions"
+              label="Eu aceito os termos e condições"
               checked={form.values.terms}
               onChange={(event) =>
                 form.setFieldValue("terms", event.currentTarget.checked)
@@ -134,9 +180,9 @@ export default function AuthenticationForm(props: any) {
             onClick={() => toggle()}
             size="xs"
           >
-            {type === "register"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
+            {type === "cadastro"
+              ? "Já tem uma conta? Faça o Login"
+              : "Não tem uma conta? Cadastre-se"}
           </Anchor>
           <Button type="submit" radius="xl">
             {upperFirst(type)}
