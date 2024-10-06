@@ -43,7 +43,7 @@ export default function CadClient() {
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <TextInput
             withAsterisk
-            label="Pesuisa cliente"
+            label="Pesquisa cliente"
             key={form.key("nome")}
             {...form.getInputProps("nome")}
           />

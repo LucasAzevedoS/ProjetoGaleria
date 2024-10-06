@@ -1,5 +1,5 @@
 "use client";
-import { useToggle, upperFirst } from "@mantine/hooks";
+import { useToggle, upperFirst, useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -12,27 +12,36 @@ import {
   Checkbox,
   Anchor,
   Stack,
+  Input,
+  Switch,
+  Notification,
 } from "@mantine/core";
 import { GoogleButton } from "./GoogleButton";
 import { signIn, signOut } from "next-auth/react";
-import { NumericFormat } from "react-number-format";
-
+import { IMaskInput } from "react-imask";
+import { InserirUsuario } from "@/app/api/usuarios";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
+import classes from "./Form.module.css";
 export function Sair() {
   return <Button onClick={() => signOut()}>Logoff</Button>;
 }
 
 export default function AuthenticationForm(props: any) {
-  const [type, toggle] = useToggle(["login", "cadastro"]);
+  const router = useRouter();
+  const [type, tptoggle] = useToggle(["login", "cadastro"]);
+  const [doctoggle, { toggle }] = useDisclosure();
   const form = useForm({
     initialValues: {
-      username: "",
-      name: "",
-      cpf: "",
-      fone: "",
-      empresa: "",
-      password: "",
-      terms: true,
-      fotografo: true,
+      username: "email@email",
+      name: "Roberval",
+      docto: "110000000",
+      fone: "110000000",
+      empresa: "Bubadi",
+      password: "123456",
+      confirmPassword: "sevret",
+      termo: true,
+      ehFotografo: true,
     },
 
     validate: {
@@ -41,6 +50,8 @@ export default function AuthenticationForm(props: any) {
       //   val.length <= 6
       //     ? "Password should include at least 6 characters"
       //     : null,
+      // confirmPassword: (value, values) =>
+      //   value !== values.password ? "Passwords did not match" : null,
     },
   });
 
@@ -60,6 +71,35 @@ export default function AuthenticationForm(props: any) {
       console.log("Login successful:", result);
       // Aqui você pode redirecionar o usuário manualmente, se necessário
     }
+  };
+  const cadUsuario = async (values: any) => {
+    const result = await InserirUsuario(values);
+    console.log("result");
+    console.log(result);
+
+    if (result.ok) {
+      notifications.show({
+        title: "Usuário criado com sucesso",
+        message: "Por favor acesse com o Login e senha! 🎉",
+        color: "Teal",
+        position: "top-right",
+        withBorder: true,
+        radius: "md",
+        classNames: classes,
+      });
+    } else {
+      notifications.show({
+        title: "Usuário criado com sucesso",
+        message:
+          "Por favor tente novamente ou entre em contato como administrador do sistema! 🚫 ",
+        color: "red",
+        position: "top-right",
+        withBorder: true,
+        radius: "md",
+        classNames: classes,
+      });
+    }
+    tptoggle();
   };
 
   return (
@@ -81,7 +121,7 @@ export default function AuthenticationForm(props: any) {
 
       <form
         onSubmit={form.onSubmit((values) => {
-          handleLogin(values);
+          type === "cadastro" ? cadUsuario(values) : handleLogin(values);
         })}
       >
         <Stack>
@@ -96,30 +136,41 @@ export default function AuthenticationForm(props: any) {
                 }
                 radius="md"
               />
-              <TextInput
-                label="CPF"
-                placeholder="Seu nome"
-                value={form.values.cpf}
+              <Switch
+                checked={doctoggle}
+                onChange={toggle}
+                label="Pessoa Juridica"
+              />
+              <Input.Label required>{doctoggle ? "CNPJ" : "CPF"}</Input.Label>
+              <Input
+                component={IMaskInput}
+                mask={doctoggle ? "00.000.000/0000-00" : "000.000.000-00"}
+                value={form.values.docto}
                 onChange={(event) =>
-                  form.setFieldValue("cpf", event.currentTarget.value)
+                  form.setFieldValue("docto", event.currentTarget.value)
                 }
                 radius="md"
               />
-              <TextInput
-                label="Telefone"
+              {doctoggle && (
+                <TextInput
+                  label="Empresa"
+                  placeholder="Nome da Empresa"
+                  value={form.values.empresa}
+                  onChange={(event) =>
+                    form.setFieldValue("empresa", event.currentTarget.value)
+                  }
+                  radius="md"
+                />
+              )}
+
+              <Input.Label required>Telefone</Input.Label>
+              <Input
                 placeholder="Seu nome"
+                component={IMaskInput}
+                mask="(00)0 0000-0000"
                 value={form.values.fone}
                 onChange={(event) =>
                   form.setFieldValue("fone", event.currentTarget.value)
-                }
-                radius="md"
-              />
-              <TextInput
-                label="Empresa"
-                placeholder="Seu nome"
-                value={form.values.empresa}
-                onChange={(event) =>
-                  form.setFieldValue("empresa", event.currentTarget.value)
                 }
                 radius="md"
               />
@@ -143,6 +194,7 @@ export default function AuthenticationForm(props: any) {
             label="Senha"
             placeholder="Sua senha"
             value={form.values.password}
+            {...form.getInputProps("password")}
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
@@ -152,23 +204,31 @@ export default function AuthenticationForm(props: any) {
             }
             radius="md"
           />
-
-          <Checkbox
-            label="Sou Fotografo"
-            checked={form.values.fotografo}
-            onChange={(event) =>
-              form.setFieldValue("fotografo", event.currentTarget.checked)
-            }
-          />
-
           {type === "cadastro" && (
-            <Checkbox
-              label="Eu aceito os termos e condições"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
-              }
-            />
+            <>
+              <PasswordInput
+                mt="sm"
+                label="Confirm password"
+                placeholder="Confirm password"
+                key={form.key("confirmPassword")}
+                {...form.getInputProps("confirmPassword")}
+              />
+              <Checkbox
+                label="Sou Fotografo"
+                checked={form.values.ehFotografo}
+                onChange={(event) =>
+                  form.setFieldValue("ehFotografo", event.currentTarget.checked)
+                }
+              />
+
+              <Checkbox
+                label="Eu aceito os termos e condições"
+                checked={form.values.termo}
+                onChange={(event) =>
+                  form.setFieldValue("termo", event.currentTarget.checked)
+                }
+              />
+            </>
           )}
         </Stack>
 
@@ -177,7 +237,7 @@ export default function AuthenticationForm(props: any) {
             component="button"
             type="button"
             c="dimmed"
-            onClick={() => toggle()}
+            onClick={() => tptoggle()}
             size="xs"
           >
             {type === "cadastro"
