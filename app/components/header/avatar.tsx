@@ -4,11 +4,13 @@ import {
   Button,
   UnstyledButton,
   Text,
+  Flex,
   rem,
   Avatar,
   Card,
   Popover,
   Space,
+  Skeleton,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import classes from "./header.module.css";
@@ -23,11 +25,26 @@ const stats = [
   { value: "1.6K", label: "Posts" },
 ];
 export default function AvatarLogin() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const user = session?.user.name;
+
   return (
     <>
-      {session ? (
+      {status === "loading" ? (
+        <Flex
+          justify="flex-end"
+          gap="sm"
+          align="center"
+          direction="row"
+          w={400}
+        >
+          <Skeleton height={50} circle radius={40} />
+
+          <Skeleton height={15} mt={6} width="15%" radius="xl" />
+
+          <Skeleton height={30} mt={6} width="20%" radius="xl" />
+        </Flex>
+      ) : session ? (
         <Group>
           <Popover
             width={400}

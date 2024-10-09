@@ -19,7 +19,11 @@ export default async function AreaFotografo() {
             </Stack>
           </Center>
           <Divider m={10} />
-          <SimpleGrid cols={2} spacing="lg" verticalSpacing="sm">
+          <SimpleGrid
+            cols={{ base: 2, md: 4 }}
+            spacing="lg"
+            verticalSpacing="sm"
+          >
             <CadClient />
             <CadFotografo />
             <CadGaleria />
